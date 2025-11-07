@@ -1,16 +1,58 @@
-# React + Vite
+# Task Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-featured Task Management web application built with React and Firebase.  
+The application allows users to authenticate securely, create and manage tasks,
+and perform full CRUD (Create, Read, Update, Delete) operations within an
+intuitive interface.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
 
-## React Compiler
+The Task Manager project was developed to demonstrate front-end application
+architecture, Firebase integration, and user data management using modern React
+techniques.  
+It provides a complete workflow for authenticated users to manage their daily
+tasks efficiently.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This project can serve as a strong portfolio piece for showcasing practical
+React skills, Firebase Authentication, and clean component-driven development.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Key Features
+
+- **User Authentication:** Firebase Authentication is used for secure user login
+  and registration.
+- **Task Management:** Users can create, read, update, and delete tasks in real
+  time.
+- **Data Persistence:** User-specific tasks are stored and managed via Firebase.
+- **Dynamic UI:** The interface updates instantly with changes using React’s
+  state management.
+- **Responsive Design:** Built with Tailwind CSS to ensure a consistent
+  experience across devices.
+- **Clean Code Structure:** Modular components, hooks, and reusable logic for
+  scalability.
+
+---
+
+## Technology Stack
+
+| Category           | Technology                |
+| ------------------ | ------------------------- |
+| Frontend Framework | React                     |
+| Styling            | Tailwind CSS              |
+| Authentication     | Firebase Authentication   |
+| Database           | MongoDB                   |
+| State Management   | React Hooks / Context API |
+| Build Tool         | Vite                      |
+| Deployment         | Vercel                    |
+
+---
+
+## Project Objectives
+
+1. To build a complete CRUD workflow in a modern front-end environment.
+2. To integrate Firebase Authentication with protected routes.
+3. To design a clean, maintainable component structure.
+4. To demonstrate practical UI/UX practices with React and Tailwind CSS.
