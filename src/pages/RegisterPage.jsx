@@ -1,13 +1,42 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { IoMdMail } from 'react-icons/io';
 import { FaLock, FaUser, FaUserEdit, FaUserLock } from 'react-icons/fa';
 import authBackground from '../assets/authBackground.png';
 import RegisterImg from '../assets/RegisterImg.png';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { AuthContext } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 
 const RegisterPage = () => {
+  const { createUser, user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const handleRegister = async e => {
+    e.preventDefault();
+    const form = e.target;
+    const firstName = form.firstName.value;
+    const lastName = form.lastName.value;
+    const userName = form.userName.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    try {
+      const data = await createUser(email, password);
+      console.log(data);
+      if (data.user) {
+        Swal.fire({
+          title: `Welcome ${user.displayName}`,
+          text: 'Your account is successfully register',
+          icon: 'success',
+        });
+        navigate('/');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true });
   }, []);
@@ -37,13 +66,14 @@ const RegisterPage = () => {
           data-aos-duration="ease-in-sine"
         >
           <h1 className="text-left text-5xl font-bold mb-10">Sign Up</h1>
-          <form className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-4">
             {/* First Name */}
             <div className="flex items-center px-4 border-2 rounded-lg">
               <span className="mr-4">
                 <FaUserEdit size={25} />
               </span>
               <input
+                required
                 className="border-0 py-4 focus:outline-0 w-full"
                 name="firstName"
                 type="text"
@@ -56,6 +86,7 @@ const RegisterPage = () => {
                 <FaUserEdit size={25} />
               </span>
               <input
+                required
                 className="border-0 py-4 w-full focus:outline-0"
                 name="lastName"
                 type="text"
@@ -68,6 +99,7 @@ const RegisterPage = () => {
                 <FaUser size={25} />
               </span>
               <input
+                required
                 className="border-0 py-4 w-full focus:outline-0"
                 name="userName"
                 type="text"
@@ -80,6 +112,7 @@ const RegisterPage = () => {
                 <IoMdMail size={25} />
               </span>
               <input
+                required
                 className="border-0 py-4 w-full focus:outline-0"
                 name="email"
                 type="email"
@@ -92,25 +125,17 @@ const RegisterPage = () => {
                 <FaLock size={25} />
               </span>
               <input
+                required
                 className="border-0 py-4 w-full focus:outline-0"
                 name="password"
                 type="password"
                 placeholder="Enter Password"
               />
             </div>
-            {/* Confirm Password */}
-            <div className="flex items-center px-4 border-2 rounded-lg">
-              <span className="mr-4">
-                <FaUserLock size={26} />
-              </span>
-              <input
-                className="border-0 py-4 w-full focus:outline-0"
-                type="password"
-                placeholder="Confirm Password"
-              />
-            </div>
+
             <div className="space-x-3">
               <input
+                required
                 type="checkbox"
                 name="checkbox"
                 id=""
@@ -119,7 +144,7 @@ const RegisterPage = () => {
               <label name="checkbox">I agree to all terms</label>
             </div>
             <button className="bg-red-500/50 px-10 py-6 rounded cursor-pointer hover:bg-red-500/80 transition">
-              Login
+              Register
             </button>
           </form>
 

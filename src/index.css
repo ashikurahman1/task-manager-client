@@ -30,3 +30,6 @@ a:hover {
 .border-primary {
   border-color: #ff6767;
 }
+.swal2-confirm {
+  background-color: #ff6767;
+}

@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { MdDashboard, MdHelp } from 'react-icons/md';
 import { FaExclamation, FaTwitter } from 'react-icons/fa';
 import { RiTaskLine } from 'react-icons/ri';
 import { IoMdSettings } from 'react-icons/io';
 import { TbLogout } from 'react-icons/tb';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { FaFaceAngry, FaFacebookF, FaInstagram } from 'react-icons/fa6';
+import { AuthContext } from '../../context/AuthContext';
 const DashboardNav = () => {
+  const navigate = useNavigate();
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user);
+  const handleLogout = async () => {
+    try {
+      const data = await logOut();
+      navigate('/auth/login');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <aside className="">
       <div className=" rounded-r-2xl text-base-100 relative flex flex-col justify-between">
@@ -19,8 +31,10 @@ const DashboardNav = () => {
             />
           </div>
           <div className="mt-15 flex flex-col items-center">
-            <h2 className="text-xl font-semibold">Amanuel</h2>
-            <p>amanuel@gmail.com</p>
+            <h2 className="text-xl font-semibold">
+              {user?.displayName ? user?.displayName : 'No Name Found'}
+            </h2>
+            <p>{user?.email}</p>
           </div>
 
           {/* Tabs */}
@@ -84,7 +98,10 @@ const DashboardNav = () => {
         </div>
         <div className="flex flex-col items-center gap-5 mt-6 sm:mt-10 md:mt-15">
           <div className="flex justify-center">
-            <button className="flex items-center gap-2 p-2 lg:p-3 rounded-md cursor-pointer hover:bg-[#ff6767] transition border-2 border-primary text-base-200 ">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 p-2 lg:p-3 rounded-md cursor-pointer hover:bg-[#ff6767] transition border-2 border-primary text-base-200 "
+            >
               <span>
                 <TbLogout />{' '}
               </span>

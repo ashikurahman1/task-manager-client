@@ -5,11 +5,16 @@ import DashboardLayout from '../pages/DashboardLayout';
 import Dashboard from '../components/Dashboard/Dashboard';
 import MyTask from '../components/My Task/MyTask';
 import AccountInformation from '../components/AccountInformation/AccountInformation';
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,

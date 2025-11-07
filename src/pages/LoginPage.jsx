@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { IoMdMail } from 'react-icons/io';
 import { FaLock, FaUser, FaUserEdit, FaUserLock } from 'react-icons/fa';
 import authBackground from '../assets/authBackground.png';
@@ -6,8 +6,35 @@ import LoginImg from '../assets/loginImg.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { AuthContext } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 const LoginPage = () => {
+  const { loginUserWithEmail, user, setLoading } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLoginWithEmail = async e => {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    try {
+      const data = await loginUserWithEmail(email, password);
+      console.log(data.user);
+
+      Swal.fire({
+        title: `Welcome Back ${user.displayName}`,
+        text: 'Login Success ',
+        icon: 'success',
+      });
+      setLoading(false);
+      navigate('/');
+    } catch (error) {
+      if (error.code === 'auth/invalid-credential') {
+        alert('Email and Password is Incorrect');
+      }
+    }
+  };
+
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true });
   }, []);
@@ -20,13 +47,14 @@ const LoginPage = () => {
       <section className="w-full max-w-10/12 mx-auto gap-10 flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-1/2" data-aos="zoom-out-right">
           <h1 className="text-left text-5xl font-bold mb-10">Sign In</h1>
-          <form className="space-y-4">
+          <form onSubmit={handleLoginWithEmail} className="space-y-4">
             {/* User Name */}
             <div className="flex items-center px-4 border-2 rounded-lg">
               <span className="mr-4">
                 <IoMdMail size={25} />
               </span>
               <input
+                required
                 className="border-0 py-4 w-full focus:outline-0"
                 name="email"
                 type="email"
@@ -40,6 +68,7 @@ const LoginPage = () => {
                 <FaLock size={25} />
               </span>
               <input
+                required
                 className="border-0 py-4 w-full focus:outline-0"
                 name="password"
                 type="password"
@@ -57,7 +86,7 @@ const LoginPage = () => {
               <label name="checkbox">Remember Me</label>
             </div>
             <button className="bg-red-500/50 px-10 py-6 rounded cursor-pointer hover:bg-red-500/80 transition text-white">
-              Register
+              Login
             </button>
           </form>
 
