@@ -1,2 +1,32 @@
 @import 'tailwindcss';
 @plugin "daisyui";
+@plugin "daisyui/theme" {
+  --color-primary: #ff6767;
+  --color-secondary: #3abeff;
+  --bg-primary: #f5f8ff;
+}
+a {
+  transition: all 0.3s ease-in;
+}
+a.active {
+  background: white;
+  color: #ff6767;
+}
+
+a:hover {
+  background: white;
+  color: #ff6767;
+}
+/* span {
+  font-size: 25px;
+} */
+
+.text-primary {
+  color: #ff6767;
+}
+.bg-primary {
+  background-color: #ff6767;
+}
+.border-primary {
+  border-color: #ff6767;
+}
