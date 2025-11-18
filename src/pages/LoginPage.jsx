@@ -6,12 +6,15 @@ import LoginImg from '../assets/loginImg.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FcGoogle } from 'react-icons/fc';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
 import Swal from 'sweetalert2';
 const LoginPage = () => {
-  const { loginUserWithEmail, user, setLoading } = useContext(AuthContext);
+  const { loginUserWithEmail, user, setLoading, loginWithGoogle } =
+    useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || '/';
   const handleLoginWithEmail = async e => {
     e.preventDefault();
 
@@ -27,7 +30,7 @@ const LoginPage = () => {
         icon: 'success',
       });
       setLoading(false);
-      navigate('/');
+      navigate(from, { replace: true });
     } catch (error) {
       if (error.code === 'auth/invalid-credential') {
         alert('Email and Password is Incorrect');
@@ -38,6 +41,16 @@ const LoginPage = () => {
   useEffect(() => {
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true });
   }, []);
+
+  const handleLoginWithGoogle = () => {
+    loginWithGoogle()
+      .then(() => {
+        navigate(from, { replace: true });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
 
   return (
     <div
@@ -92,9 +105,9 @@ const LoginPage = () => {
 
           <div className="mt-6 flex items-center gap-4">
             <p>Or, Login with </p>
-            <div className="btn btn-ghost">
-              <FcGoogle />
-            </div>
+            <button onClick={handleLoginWithGoogle} className="btn btn-ghost">
+              <FcGoogle size={30} />
+            </button>
           </div>
           <p className="mt-4">
             Don’t have an account?{' '}

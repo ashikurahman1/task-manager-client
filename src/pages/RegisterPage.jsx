@@ -3,7 +3,7 @@ import { IoMdMail } from 'react-icons/io';
 import { FaLock, FaUser, FaUserEdit, FaUserLock } from 'react-icons/fa';
 import authBackground from '../assets/authBackground.png';
 import RegisterImg from '../assets/RegisterImg.png';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { AuthContext } from '../context/AuthContext';
@@ -11,8 +11,10 @@ import Swal from 'sweetalert2';
 
 const RegisterPage = () => {
   const { createUser, user } = useContext(AuthContext);
+  const location = useLocation();
 
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || '/';
   const handleRegister = async e => {
     e.preventDefault();
     const form = e.target;
@@ -30,7 +32,7 @@ const RegisterPage = () => {
           text: 'Your account is successfully register',
           icon: 'success',
         });
-        navigate('/');
+        navigate(from, { replace: true });
       }
     } catch (error) {
       console.log(error);
