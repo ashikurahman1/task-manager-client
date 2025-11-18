@@ -6,7 +6,7 @@ The application allows users to authenticate securely, create and manage tasks,
 and perform full CRUD (Create, Read, Update, Delete) operations within an
 intuitive interface.
 
-![Task Manager](./assets/task-manager.png)
+![Task Manager](https://raw.githubusercontent.com/ashikurahman1/task-manager-client/refs/heads/main/src/assets/task-manager.png)
 
 ---
 
